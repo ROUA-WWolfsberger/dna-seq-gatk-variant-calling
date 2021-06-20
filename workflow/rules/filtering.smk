@@ -9,7 +9,7 @@ rule select_calls:
     log:
         "logs/gatk/selectvariants/{vartype}.log",
     wrapper:
-        "0.59.0/bio/gatk/selectvariants"
+        "0.75.0/bio/gatk/selectvariants"
 
 
 rule hard_filter_calls:
@@ -23,7 +23,7 @@ rule hard_filter_calls:
     log:
         "logs/gatk/variantfiltration/{vartype}.log",
     wrapper:
-        "0.74.0/bio/gatk/variantfiltration"
+        "0.75.0/bio/gatk/variantfiltration"
 
 
 rule recalibrate_calls:
@@ -36,7 +36,7 @@ rule recalibrate_calls:
     log:
         "logs/gatk/variantrecalibrator/{vartype}.log",
     wrapper:
-        "0.74.0/bio/gatk/variantrecalibrator"
+        "0.75.0/bio/gatk/variantrecalibrator"
 
 
 rule merge_calls:
@@ -53,4 +53,4 @@ rule merge_calls:
     log:
         "logs/picard/merge-filtered.log",
     wrapper:
-        "0.74.0/bio/picard/mergevcfs"
+        "0.75.0/bio/picard/mergevcfs"
