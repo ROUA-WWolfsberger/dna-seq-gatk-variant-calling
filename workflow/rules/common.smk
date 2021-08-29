@@ -70,18 +70,18 @@ def get_trimmed_reads(wildcards):
     if not is_single_end(**wildcards):
         # paired-end sample
         return expand(
-            "results/trimmed/{sample}-{unit}.{group}.fastq.gz",
+            "{results_path}/trimmed/{sample}-{unit}.{group}.fastq.gz",
             group=[1, 2],
             **wildcards
         )
     # single end sample
-    return "results/trimmed/{sample}-{unit}.fastq.gz".format(**wildcards)
+    return "{results_path}/trimmed/{sample}-{unit}.fastq.gz".format(**wildcards)
 
 
 def get_sample_bams(wildcards):
     """Get all aligned reads of given sample."""
     return expand(
-        "results/recal/{sample}-{unit}.bam",
+        "{results_path}/recal/{sample}-{unit}.bam",
         sample=wildcards.sample,
         unit=units.loc[wildcards.sample].unit,
     )
@@ -108,10 +108,10 @@ def get_call_variants_params(wildcards, input):
 
 def get_recal_input(bai=False):
     # case 1: no duplicate removal
-    f = "results/mapped/{sample}-{unit}.sorted.bam"
+    f = "{results_path}/mapped/{sample}-{unit}.sorted.bam"
     if config["processing"]["remove-duplicates"]:
         # case 2: remove duplicates
-        f = "results/dedup/{sample}-{unit}.bam"
+        f = "{results_path}/dedup/{sample}-{unit}.bam"
     if bai:
         if config["processing"].get("restrict-regions"):
             # case 3: need an index because random access is required

@@ -2,7 +2,7 @@ rule trim_reads_se:
     input:
         unpack(get_fastq),
     output:
-        temp("results/trimmed/{sample}-{unit}.fastq.gz"),
+        temp("{results_path}/trimmed/{sample}-{unit}.fastq.gz"),
     params:
         **config["params"]["trimmomatic"]["se"],
         extra="",
@@ -16,11 +16,11 @@ rule trim_reads_pe:
     input:
         unpack(get_fastq),
     output:
-        r1=temp("results/trimmed/{sample}-{unit}.1.fastq.gz"),
-        r2=temp("results/trimmed/{sample}-{unit}.2.fastq.gz"),
-        r1_unpaired=temp("results/trimmed/{sample}-{unit}.1.unpaired.fastq.gz"),
-        r2_unpaired=temp("results/trimmed/{sample}-{unit}.2.unpaired.fastq.gz"),
-        trimlog="results/trimmed/{sample}-{unit}.trimlog.txt",
+        r1=temp("{results_path}/trimmed/{sample}-{unit}.1.fastq.gz"),
+        r2=temp("{results_path}/trimmed/{sample}-{unit}.2.fastq.gz"),
+        r1_unpaired=temp("{results_path}/trimmed/{sample}-{unit}.1.unpaired.fastq.gz"),
+        r2_unpaired=temp("{results_path}/trimmed/{sample}-{unit}.2.unpaired.fastq.gz"),
+        trimlog="{results_path}/trimmed/{sample}-{unit}.trimlog.txt",
     params:
         **config["params"]["trimmomatic"]["pe"],
         extra=lambda w, output: "-trimlog {}".format(output.trimlog),
@@ -35,7 +35,7 @@ rule map_reads:
         reads=get_trimmed_reads,
         idx=rules.bwa_index.output,
     output:
-        temp("results/mapped/{sample}-{unit}.sorted.bam"),
+        temp("{results_path}/mapped/{sample}-{unit}.sorted.bam"),
     log:
         "logs/bwa_mem/{sample}-{unit}.log",
     params:
@@ -50,10 +50,10 @@ rule map_reads:
 
 rule mark_duplicates:
     input:
-        "results/mapped/{sample}-{unit}.sorted.bam",
+        "{results_path}/mapped/{sample}-{unit}.sorted.bam",
     output:
-        bam=temp("results/dedup/{sample}-{unit}.bam"),
-        metrics="results/qc/dedup/{sample}-{unit}.metrics.txt",
+        bam=temp("{results_path}/dedup/{sample}-{unit}.bam"),
+        metrics="{results_path}/qc/dedup/{sample}-{unit}.metrics.txt",
     log:
         "logs/picard/dedup/{sample}-{unit}.log",
     params:
@@ -66,12 +66,12 @@ rule recalibrate_base_qualities:
     input:
         bam=get_recal_input(),
         bai=get_recal_input(bai=True),
-        ref="resources/genome.fasta",
-        dict="resources/genome.dict",
-        known="resources/variation.noiupac.vcf.gz",
-        known_idx="resources/variation.noiupac.vcf.gz.tbi",
+        ref="{resources_path}/genome.fasta",
+        dict="{resources_path}/genome.dict",
+        known="{resources_path}/variation.noiupac.vcf.gz",
+        known_idx="{resources_path}/variation.noiupac.vcf.gz.tbi",
     output:
-        recal_table="results/recal/{sample}-{unit}.grp",
+        recal_table="{results_path}/recal/{sample}-{unit}.grp",
     log:
         "logs/gatk/bqsr/{sample}-{unit}.log",
     params:
@@ -86,11 +86,11 @@ rule apply_base_quality_recalibration:
     input:
         bam=get_recal_input(),
         bai=get_recal_input(bai=True),
-        ref="resources/genome.fasta",
-        dict="resources/genome.dict",
-        recal_table="results/recal/{sample}-{unit}.grp",
+        ref="{resources_path}/genome.fasta",
+        dict="{resources_path}/genome.dict",
+        recal_table="{results_path}/recal/{sample}-{unit}.grp",
     output:
-        bam=protected("results/recal/{sample}-{unit}.bam"),
+        bam=protected("{results_path}/recal/{sample}-{unit}.bam"),
     log:
         "logs/gatk/apply-bqsr/{sample}-{unit}.log",
     params:
