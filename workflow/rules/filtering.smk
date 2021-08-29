@@ -1,9 +1,9 @@
 rule select_calls:
     input:
-        ref="{resources_path}/genome.fasta",
-        vcf="{results_path}/genotyped/all.vcf.gz",
+        ref=resources_path+"genome.fasta",
+        vcf=results_path+"genotyped/all.vcf.gz",
     output:
-        vcf=temp("{results_path}/filtered/all.{vartype}.vcf.gz"),
+        vcf=temp(results_path+"filtered/all.{vartype}.vcf.gz"),
     params:
         extra=get_vartype_arg,
     log:
@@ -14,10 +14,10 @@ rule select_calls:
 
 rule hard_filter_calls:
     input:
-        ref="{resources_path}/genome.fasta",
-        vcf="{results_path}/filtered/all.{vartype}.vcf.gz",
+        ref=resources_path+"genome.fasta",
+        vcf=results_path+"filtered/all.{vartype}.vcf.gz",
     output:
-        vcf=temp("{results_path}/filtered/all.{vartype}.hardfiltered.vcf.gz"),
+        vcf=temp(results_path+"filtered/all.{vartype}.hardfiltered.vcf.gz"),
     params:
         filters=get_filter,
     log:
@@ -28,9 +28,9 @@ rule hard_filter_calls:
 
 rule recalibrate_calls:
     input:
-        vcf="{results_path}/filtered/all.{vartype}.vcf.gz",
+        vcf=results_path+"filtered/all.{vartype}.vcf.gz",
     output:
-        vcf=temp("{results_path}/filtered/all.{vartype}.recalibrated.vcf.gz"),
+        vcf=temp(results_path+"filtered/all.{vartype}.recalibrated.vcf.gz"),
     params:
         extra=config["params"]["gatk"]["VariantRecalibrator"],
     log:
@@ -42,14 +42,14 @@ rule recalibrate_calls:
 rule merge_calls:
     input:
         vcfs=expand(
-            "{results_path}/filtered/all.{vartype}.{filtertype}.vcf.gz",
+            results_path+"filtered/all.{vartype}.{filtertype}.vcf.gz",
             vartype=["snvs", "indels"],
             filtertype="recalibrated"
             if config["filtering"]["vqsr"]
             else "hardfiltered",
         ),
     output:
-        vcf="{results_path}/filtered/all.vcf.gz",
+        vcf=results_path+"filtered/all.vcf.gz",
     log:
         "logs/picard/merge-filtered.log",
     wrapper:

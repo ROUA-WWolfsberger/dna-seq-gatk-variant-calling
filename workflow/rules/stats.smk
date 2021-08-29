@@ -1,9 +1,9 @@
 rule vcf_to_tsv:
     input:
-        "{results_path}/annotated/all.vcf.gz",
+        results_path+"annotated/all.vcf.gz",
     output:
         report(
-            "{results_path}/tables/calls.tsv.gz",
+            results_path+"tables/calls.tsv.gz",
             caption="../report/calls.rst",
             category="Calls",
         ),
@@ -19,13 +19,13 @@ rule vcf_to_tsv:
 
 rule plot_stats:
     input:
-        "{results_path}/tables/calls.tsv.gz",
+        results_path+"tables/calls.tsv.gz",
     output:
         depths=report(
-            "{results_path}/plots/depths.svg", caption="../report/depths.rst", category="Plots"
+            results_path+"plots/depths.svg", caption="../report/depths.rst", category="Plots"
         ),
         freqs=report(
-            "{results_path}/plots/allele-freqs.svg",
+            results_path+"plots/allele-freqs.svg",
             caption="../report/freqs.rst",
             category="Plots",
         ),

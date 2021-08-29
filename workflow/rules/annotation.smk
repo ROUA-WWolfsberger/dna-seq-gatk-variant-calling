@@ -1,16 +1,16 @@
 rule annotate_variants:
     input:
-        calls="{results_path}/filtered/all.vcf.gz",
-        cache="{resources_path}/vep/cache",
-        plugins="{resources_path}/vep/plugins",
+        calls=results_path+"filtered/all.vcf.gz",
+        cache=resources_path+"vep/cache",
+        plugins=resources_path+"vep/plugins",
     output:
         calls=report(
-            "{results_path}/annotated/all.vcf.gz",
+            results_path+"annotated/all.vcf.gz",
             caption="../report/vcf.rst",
             category="Calls",
         ),
         stats=report(
-            "{results_path}/stats/all.stats.html",
+            results_path+"stats/all.stats.html",
             caption="../report/stats.rst",
             category="Calls",
         ),

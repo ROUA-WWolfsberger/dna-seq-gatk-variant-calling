@@ -1,6 +1,6 @@
 rule get_genome:
     output:
-        "{resources_path}/genome.fasta",
+        resources_path+"genome.fasta",
     log:
         "logs/get-genome.log",
     params:
@@ -15,9 +15,9 @@ rule get_genome:
 
 checkpoint genome_faidx:
     input:
-        "{resources_path}/genome.fasta",
+        resources_path+"genome.fasta",
     output:
-        "{resources_path}/genome.fasta.fai",
+        resources_path+"genome.fasta.fai",
     log:
         "logs/genome-faidx.log",
     cache: True
@@ -27,9 +27,9 @@ checkpoint genome_faidx:
 
 rule genome_dict:
     input:
-        "{resources_path}/genome.fasta",
+        resources_path+"genome.fasta",
     output:
-        "{resources_path}/genome.dict",
+        resources_path+"genome.dict",
     log:
         "logs/samtools/create_dict.log",
     conda:
@@ -42,9 +42,9 @@ rule genome_dict:
 rule get_known_variation:
     input:
         # use fai to annotate contig lengths for GATK BQSR
-        fai="{resources_path}/genome.fasta.fai",
+        fai=resources_path+"genome.fasta.fai",
     output:
-        vcf="{resources_path}/variation.vcf.gz",
+        vcf=resources_path+"variation.vcf.gz",
     log:
         "logs/get-known-variants.log",
     params:
@@ -59,9 +59,9 @@ rule get_known_variation:
 
 rule remove_iupac_codes:
     input:
-        "{resources_path}/variation.vcf.gz",
+        resources_path+"variation.vcf.gz",
     output:
-        "{resources_path}/variation.noiupac.vcf.gz",
+        resources_path+"variation.noiupac.vcf.gz",
     log:
         "logs/fix-iupac-alleles.log",
     conda:
@@ -73,9 +73,9 @@ rule remove_iupac_codes:
 
 rule tabix_known_variants:
     input:
-        "{resources_path}/variation.noiupac.vcf.gz",
+        resources_path+"variation.noiupac.vcf.gz",
     output:
-        "{resources_path}/variation.noiupac.vcf.gz.tbi",
+        resources_path+"variation.noiupac.vcf.gz.tbi",
     log:
         "logs/tabix/variation.log",
     params:
@@ -87,9 +87,9 @@ rule tabix_known_variants:
 
 rule bwa_index:
     input:
-        "{resources_path}/genome.fasta",
+        resources_path+"genome.fasta",
     output:
-        multiext("{resources_path}/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        multiext(resources_path+"genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
         "logs/bwa_index.log",
     resources:
@@ -101,7 +101,7 @@ rule bwa_index:
 
 rule get_vep_cache:
     output:
-        directory("{resources_path}/vep/cache"),
+        directory(resources_path+"vep/cache"),
     params:
         species=config["ref"]["species"],
         build=config["ref"]["build"],
@@ -114,7 +114,7 @@ rule get_vep_cache:
 
 rule get_vep_plugins:
     output:
-        directory("{resources_path}/vep/plugins"),
+        directory(resources_path+"vep/plugins"),
     log:
         "logs/vep/plugins.log",
     params:

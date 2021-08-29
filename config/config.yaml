@@ -1,7 +1,7 @@
 samples: config/samples.tsv
 units: config/units.tsv
-results_path: results
-resources_path: resources
+results_path: results/
+resources_path: resources/
 
 ref:
   # ensembl species name
