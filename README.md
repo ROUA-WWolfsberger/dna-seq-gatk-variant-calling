@@ -2,7 +2,7 @@
 
 Development was supported in part by 2SOFT/1.2/48 project "Partnership for Genomic Research in Ukraine and Romania" by the Joint Operational Programme Romania-Ukraine, through the European Neighbourhood Instrument (ENI).
 
-<img src="https://genomes.uzhnu.edu.ua/wp-content/uploads/2021/08/cropped-Logos-1.png" width="200">
+<img src="https://genomes.uzhnu.edu.ua/wp-content/uploads/2021/08/cropped-Logos-1.png" width="200"> <img src="https://genomes.uzhnu.edu.ua/wp-content/uploads/2021/08/VASILE-LOGO.png" width="200"> <img src="https://genomes.uzhnu.edu.ua/wp-content/uploads/2021/08/UzNU_logo_new2.png" width="200">
 
 
 # Snakemake workflow: dna-seq-gatk-variant-calling
