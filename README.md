@@ -1,3 +1,8 @@
+#The pipeline was modified to support computing on servers via scratch folders to mainian a separation of environments, resources, and data files in separate locations.
+
+Development was supported in part by 2SOFT/1.2/48 project "Partnership for Genomic Research in Ukraine and Romania" by the Joint Operational Programme Romania-Ukraine, through the European Neighbourhood Instrument (ENI).
+
+
 # Snakemake workflow: dna-seq-gatk-variant-calling
 
 [![DOI](https://zenodo.org/badge/139045164.svg)](https://zenodo.org/badge/latestdoi/139045164)
@@ -11,3 +16,4 @@ This Snakemake pipeline implements the [GATK best-practices workflow](https://ga
 The usage of this workflow is described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=snakemake-workflows%2Fdna-seq-gatk-variant-calling).
 
 If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) repository and its DOI (see above).
+
