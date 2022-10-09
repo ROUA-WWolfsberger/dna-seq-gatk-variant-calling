@@ -1,4 +1,4 @@
-## The pipeline was modified to support computing on servers via scratch folders to mainian a separation of environments, resources, and data files in separate locations.
+## The pipeline was modified to support computing on servers via scratch folders to mainian a separation of environments, resources, and data files in separate locations. Additional parameters required in cofig files.
 
 Development was supported in part by 2SOFT/1.2/48 project "Partnership for Genomic Research in Ukraine and Romania" by the Joint Operational Programme Romania-Ukraine, through the European Neighbourhood Instrument (ENI).
 
